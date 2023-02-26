@@ -22,6 +22,7 @@ import ResultScreen, { IncorrectInfo, ResultSpeedInfo } from '@/components/Resul
 import mixpanel from 'mixpanel-browser'
 import { ChapterStatUpload, WordStat, WordStatUpload } from '@/utils/statInfo'
 import dayjs from 'dayjs'
+import './custom.css'
 
 const App: React.FC = () => {
   const [order, setOrder] = useState<number>(0)
@@ -197,6 +198,18 @@ const App: React.FC = () => {
     setDictation(false)
   }
 
+  const wordListTips = (arr: any) => {
+    let _wordList = arr.slice(0, order).map((_word: any) => {
+      return (
+        <span className="history-word" key={_word.name}>
+          {_word.name}
+        </span>
+      )
+    })
+
+    return <div>{_wordList}</div>
+  }
+
   return (
     <>
       {resultScreenState && (
@@ -239,6 +252,7 @@ const App: React.FC = () => {
             </Tooltip>
           </Header>
           <Main>
+            <div>{wordListTips(wordList.words)}</div>
             <div className="container h-full relative flex mx-auto flex-col items-center">
               <div className="h-1/3"></div>
               {!isStart && <h3 className="pb-4 text-xl text-gray-600 dark:text-gray-50 animate-pulse">按任意键开始</h3>}
